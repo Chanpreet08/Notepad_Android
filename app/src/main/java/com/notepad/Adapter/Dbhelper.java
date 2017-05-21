@@ -20,9 +20,10 @@ public class Dbhelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION=1;
     public static final String TABLE_NAME="notes";
     public static final String _id="_id";
-    public static final String name="name";
-    public static final String date = "date";
-    public static final String notes ="text";
+    public static final String title="title";
+    public static final String dateCreated = "dateCreated";
+    public static final String dateModified ="dateModified";
+    public static final String content ="content";
     private static Context context;
     SQLiteDatabase db;
 
@@ -35,8 +36,8 @@ public class Dbhelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase dbname) {
         db = dbname;
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( "
-                + _id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + name
-                + " TEXT, " + date+ " TEXT, "+notes +" TEXT )";
+                + _id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + title
+                + " TEXT, " + content+ " TEXT, "+dateCreated +" TEXT "+dateModified+" TEXT )";
         dbname.execSQL(sql);
     }
 
@@ -49,9 +50,10 @@ public class Dbhelper extends SQLiteOpenHelper {
     public void add(Data data)
     {
         ContentValues cv = new ContentValues();
-        cv.put(name,data.getName());
-        cv.put(date,data.getDate());
-        cv.put(notes,data.getNotes());
+        cv.put(title,data.getTitle());
+        cv.put(content,data.getContent());
+        cv.put(dateCreated,data.getDateCreated());
+        cv.put(dateModified,data.getDateModified());
         db.insert(TABLE_NAME,null,cv);
     }
 
@@ -66,9 +68,10 @@ public class Dbhelper extends SQLiteOpenHelper {
             do{
                 Data d = new Data();
                 d.setId(cursor.getInt(0));
-                d.setName(cursor.getString(1));
-                d.setDate(cursor.getString(2));
-                d.setNotes(cursor.getString(3));
+                d.setTitle(cursor.getString(1));
+                d.setContent(cursor.getString(2));
+                d.setDateCreated(cursor.getString(3));
+                d.setDateModified(cursor.getString(4));
                 list.add(d);
             }
             while(cursor.moveToNext());

@@ -7,23 +7,26 @@ package com.notepad.Model;
 public class Data {
 
     private int id;
-    private String name;
-    private String date;
-    private String notes;
+    private String title;
+    private String content;
+    private String dateCreated;
+    private String dateModified;
 
     public Data()
     {
         id=0;
-        name="";
-        date="";
-        notes="";
+        title="";
+        content="";
+        dateCreated="";
+        dateModified="";
     }
 
-    public Data(String name, String date, String notes)
+    public Data(String title, String content, String dateCreated,String dateModified)
     {
-        this.name= name;
-        this.date = date;
-        this.notes = notes;
+        this.title= title;
+        this.content = content;
+        this.dateCreated = dateCreated;
+        this.dateModified=dateModified;
     }
 
     public int getId() {
@@ -34,27 +37,35 @@ public class Data {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getContent() {
+        return content;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getDateCreated() {
+        return dateCreated;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 }
