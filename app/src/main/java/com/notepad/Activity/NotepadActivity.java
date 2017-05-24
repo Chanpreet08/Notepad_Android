@@ -38,8 +38,8 @@ public class NotepadActivity extends AppCompatActivity {
         Data data = new Data();
         data.setTitle(title.getText().toString());
         data.setContent(content.getText().toString());
-        data.setDateCreated(date);
-        data.setDateModified(date);
+        //data.setDateCreated(date);
+        //data.setDateModified(date);
         dbhelper.add(data);
     }
 

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.notepad.Adapter.Dbhelper;
 import com.notepad.Adapter.RecyclerAdapter;
 import com.notepad.Model.Data;
 import com.notepad.R;
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        adapter = new RecyclerAdapter(MainActivity.this,dataList);
+        Dbhelper dbhelper = new Dbhelper(MainActivity.this);
+        dataList = dbhelper.getData();
+        setupView();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +66,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setupView()
+    {
+        adapter = new RecyclerAdapter(MainActivity.this,dataList);
+        linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Dbhelper dbhelper = new Dbhelper(MainActivity.this);
+        dataList=dbhelper.getData();
+        setupView();
     }
 
     @Override
@@ -83,5 +101,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 }

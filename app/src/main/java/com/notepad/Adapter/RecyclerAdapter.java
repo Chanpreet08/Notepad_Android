@@ -35,12 +35,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.title.setText(dataList.get(position).getTitle());
+        holder.content.setText(dataList.get(position).getContent());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder
