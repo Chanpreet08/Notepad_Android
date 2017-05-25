@@ -2,7 +2,10 @@ package com.notepad.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private Context context;
     private ArrayList<Data> dataList = new ArrayList<>();
+
 
     public RecyclerAdapter(Context context,ArrayList<Data> dataList)
     {
@@ -48,10 +52,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         private TextView title;
         private TextView content;
+        private View view;
         public ViewHolder(View itemView) {
             super(itemView);
+            view=  itemView;
             title = (TextView) itemView.findViewById(R.id.recycler_title);
             content = (TextView) itemView.findViewById(R.id.recycler_content);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int p = getLayoutPosition();
+                    Log.d("position",p+"");
+                    return false;
+                }
+            });
+            itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                @Override
+                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                    menu.add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Log.d("delete","delete");
+                            return false;
+                        }
+                    });
+                }
+            });
         }
+
     }
 }
