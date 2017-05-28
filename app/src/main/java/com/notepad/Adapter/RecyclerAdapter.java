@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.notepad.Activity.MainActivity;
 import com.notepad.Model.Data;
 import com.notepad.R;
 
@@ -38,10 +39,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(dataList.get(position).getTitle());
         holder.content.setText(dataList.get(position).getContent());
+        holder.view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Data data = dataList.get(position);
+                        Dbhelper dbhelper = new Dbhelper(context);
+                        dbhelper.deleteRow(data.getId()+"");
+                        dataList = dbhelper.getData();
+                        notifyDataSetChanged();
+                        return false;
+                    }
+                });
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -62,26 +80,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
 
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int p = getLayoutPosition();
-                    Log.d("position",p+"");
-                    return false;
-                }
-            });
-            itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-                @Override
-                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                    menu.add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Log.d("delete","delete");
-                            return false;
-                        }
-                    });
                 }
             });
         }

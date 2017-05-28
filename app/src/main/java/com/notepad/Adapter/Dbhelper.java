@@ -86,4 +86,9 @@ public class Dbhelper extends SQLiteOpenHelper {
         }
         return list;
     }
+
+    public boolean deleteRow(String id)
+    {
+        return db.delete(TABLE_NAME,this.id+"="+id,null)>0;
+    }
 }
