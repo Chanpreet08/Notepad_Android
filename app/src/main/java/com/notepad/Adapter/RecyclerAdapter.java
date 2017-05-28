@@ -1,6 +1,7 @@
 package com.notepad.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.notepad.Activity.DetailActivity;
 import com.notepad.Activity.MainActivity;
+import com.notepad.Activity.NotepadActivity;
 import com.notepad.Model.Data;
 import com.notepad.R;
 
@@ -39,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder( ViewHolder holder, final int position) {
         holder.title.setText(dataList.get(position).getTitle());
         holder.content.setText(dataList.get(position).getContent());
         holder.view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -56,6 +59,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         return false;
                     }
                 });
+
+            }
+        });
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context, NotepadActivity.class);
+                detailIntent.putExtra("title",dataList.get(position).getTitle());
+                detailIntent.putExtra("content",dataList.get(position).getContent());
+                detailIntent.putExtra("id",dataList.get(position).getId());
+                detailIntent.putExtra("dateCreated",dataList.get(position).getDateCreated());
+                context.startActivity(detailIntent);
             }
         });
     }
@@ -76,12 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             view=  itemView;
             title = (TextView) itemView.findViewById(R.id.recycler_title);
             content = (TextView) itemView.findViewById(R.id.recycler_content);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
         }
 
     }

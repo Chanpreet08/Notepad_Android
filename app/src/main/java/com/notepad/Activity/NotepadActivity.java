@@ -20,13 +20,27 @@ public class NotepadActivity extends AppCompatActivity {
     private Calendar calender;
     private SimpleDateFormat simpleDateFormat;
     private String date;
+    private String stringTitle="";
+    private String stringContent="";
+    private int id;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
+        bundle = getIntent().getExtras();
+
         title =(EditText) findViewById(R.id.title);
         content = (EditText) findViewById(R.id.content);
+        if(bundle!=null)
+        {
+            stringTitle=bundle.getString("title");
+            stringContent= bundle.getString("content");
+            id=bundle.getInt("id");
+            title.setText(stringTitle);
+            content.setText(stringContent);
+        }
     }
 
     private void save()
@@ -36,11 +50,24 @@ public class NotepadActivity extends AppCompatActivity {
         date = simpleDateFormat.format(calender.getTime());
         Dbhelper dbhelper = new Dbhelper(NotepadActivity.this);
         Data data = new Data();
-        data.setTitle(title.getText().toString());
-        data.setContent(content.getText().toString());
-        //data.setDateCreated(date);
-        //data.setDateModified(date);
-        dbhelper.add(data);
+        if(bundle!=null)
+        {
+            data.setTitle(title.getText().toString());
+            data.setContent(content.getText().toString());
+            data.setDateCreated(date);
+            data.setDateModified(date);
+            dbhelper.upDateRow(id,data);
+        }
+        else
+        {
+
+            data.setTitle(title.getText().toString());
+            data.setContent(content.getText().toString());
+            data.setDateCreated(date);
+            data.setDateModified(date);
+            dbhelper.add(data);
+        }
+
     }
 
     @Override

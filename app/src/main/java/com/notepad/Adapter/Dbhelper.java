@@ -62,7 +62,7 @@ public class Dbhelper extends SQLiteOpenHelper {
         cv.put(title,data.getTitle());
         cv.put(content,data.getContent());
         db.insert(TABLE_NAME,null,cv);
-        Toast.makeText( context, "Content Added", Toast.LENGTH_SHORT).show();
+        Toast.makeText( context, "New Note Added", Toast.LENGTH_SHORT).show();
     }
 
     public ArrayList<Data> getData()
@@ -90,5 +90,14 @@ public class Dbhelper extends SQLiteOpenHelper {
     public boolean deleteRow(String id)
     {
         return db.delete(TABLE_NAME,this.id+"="+id,null)>0;
+    }
+    public void upDateRow(int id,Data data)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put(dateModified,data.getDateModified());
+        cv.put(title,data.getTitle());
+        cv.put(content,data.getContent());
+        db.update(TABLE_NAME,cv,"id="+id,null);
+        Toast.makeText( context, "Content Updated", Toast.LENGTH_SHORT).show();
     }
 }
